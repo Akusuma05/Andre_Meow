@@ -120,8 +120,8 @@ public class LoginFragment extends Fragment {
 //                String username = username_login.getEditText().getText().toString().trim();
 //                String pass = pass_login.getEditText().getText().toString().trim();
 //            }
-            Intent 
-            startActivity(new Intent(getActivity(), DashboardActivity.class));
+            Intent intent = new Intent(getActivity(), DashboardActivity.class);
+            startActivity(intent);
         });
     }
 }

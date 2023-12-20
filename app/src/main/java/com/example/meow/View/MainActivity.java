@@ -11,18 +11,18 @@ import com.example.meow.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    NavHostFragment navHostFragment;
+    NavHostFragment navHostFragment_main;
 
-    NavController navController;
+    NavController navController_main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView);
+        navHostFragment_main = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentContainerView_main);
 
-        AppBarConfiguration configuration = new AppBarConfiguration.Builder(R.id.login_Fragment, R.id.registerFragment, R.id.dashboardFragment).build();
-        navController = navHostFragment.getNavController();
+        AppBarConfiguration configuration = new AppBarConfiguration.Builder(R.id.login_Fragment, R.id.registerFragment).build();
+        navController_main = navHostFragment_main.getNavController();
     }
 }
