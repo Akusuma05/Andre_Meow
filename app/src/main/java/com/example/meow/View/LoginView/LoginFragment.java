@@ -1,5 +1,6 @@
 package com.example.meow.View.LoginView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.meow.R;
+import com.example.meow.View.DashboardActivity;
+import com.example.meow.View.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -78,12 +81,25 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        /**
+         * Deklarasi Object di dalam fragment Login
+         *
+         * Object yang di deklarasi
+         * @TextInputLayout Username, Password
+         * @Button Login
+         * @TextView Register
+         */
         username_login = view.findViewById(R.id.username_login);
         pass_login = view.findViewById(R.id.password_login);
         btn_login = view.findViewById(R.id.login_button_login);
         btn_reg = view.findViewById(R.id.register_button_login);
 
-        //Tombol Register
+        /**
+         * Tombol Register Here samping tulisan don't have account
+         *
+         * Di click buat pindah kehalaman register
+         */
         btn_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,14 +108,20 @@ public class LoginFragment extends Fragment {
             }
         });
 
-
-        //Login
+        /**
+         * Tombol Login
+         *
+         * @Input username_login, pass_login
+         * @Output kalau sesuai pindah ke activity_dashboard
+         */
         btn_login.setOnClickListener(view1 -> {
-            if(!username_login.getEditText().getText().toString().trim().isEmpty() &&
-                    pass_login.getEditText().getText().toString().trim().isEmpty()){
-                String username = username_login.getEditText().getText().toString().trim();
-                String pass = pass_login.getEditText().getText().toString().trim();
-            }
+//            if(!username_login.getEditText().getText().toString().trim().isEmpty() &&
+//                    pass_login.getEditText().getText().toString().trim().isEmpty()){
+//                String username = username_login.getEditText().getText().toString().trim();
+//                String pass = pass_login.getEditText().getText().toString().trim();
+//            }
+            Intent 
+            startActivity(new Intent(getActivity(), DashboardActivity.class));
         });
     }
 }

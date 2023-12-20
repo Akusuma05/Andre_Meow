@@ -1,4 +1,4 @@
-package com.example.meow;
+package com.example.meow.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -6,6 +6,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 
 import android.os.Bundle;
+
+import com.example.meow.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -82,6 +82,15 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        /**
+         * Deklarasi Object di dalam fragment Login
+         *
+         * Object yang di deklarasi
+         * @TextInputLayout Username, Password, Alamat, Nomer Telepon
+         * @Spinner Role
+         * @Button Register
+         * @TextView Login
+         */
         username_regis = view.findViewById(R.id.username_register);
         pass_regis = view.findViewById(R.id.password_register);
         address_regis = view.findViewById(R.id.address_register);
@@ -90,7 +99,11 @@ public class RegisterFragment extends Fragment {
         btn_login = view.findViewById(R.id.login_button_register);
         btn_regis = view.findViewById(R.id.register_button_register);
 
-        //Tombol Login
+        /**
+         * Tombol Login Here samping tulisan have an account
+         *
+         * Di click buat pindah kehalaman Login
+         */
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +112,14 @@ public class RegisterFragment extends Fragment {
             }
         });
 
-        //Register
+        /**
+         * Tombol Register
+         *
+         * @Input username_login, pass_login, role_regis, phone_regis, address_regis
+         * @Output kalau sesuai pindah ke activity_dashboard
+         */
+        btn_regis.setOnClickListener(view1 -> {
+
+        });
     }
 }
