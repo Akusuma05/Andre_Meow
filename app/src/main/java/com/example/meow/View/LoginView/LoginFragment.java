@@ -121,6 +121,7 @@ public class LoginFragment extends Fragment {
 //                String pass = pass_login.getEditText().getText().toString().trim();
 //            }
             Intent intent = new Intent(getActivity(), DashboardActivity.class);
+            intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
             startActivity(intent);
         });
     }
