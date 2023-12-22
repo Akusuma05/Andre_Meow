@@ -23,13 +23,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="32dp">
 
             <ImageView
                 android:id="@+id/logo_dashboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="8dp"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher"
@@ -59,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:elevation="10dp"
+                    android:elevation="0dp"
                     android:padding="16dp"
                     app:srcCompat="@drawable/icon_bars"
                     tools:srcCompat="@drawable/icon_bars" />
@@ -75,7 +76,7 @@
 
                     <TextView
                         android:id="@+id/textView9"
-                        android:layout_width="wrap_content"
+                        android:layout_width="72dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Dashboard" />
@@ -97,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="16dp"
+                    android:elevation="0dp"
                     app:srcCompat="@drawable/checkbook"
                     tools:srcCompat="@drawable/checkbook" />
 
@@ -110,10 +112,10 @@
 
                     <TextView
                         android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
+                        android:layout_width="72dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Orders        " />
+                        android:text="Orders" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -122,6 +124,7 @@
                 android:id="@+id/products_nav_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -130,9 +133,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:elevation="0dp"
                     android:padding="16dp"
-                    app:srcCompat="@drawable/checkbook"
-                    tools:srcCompat="@drawable/checkbook" />
+                    app:srcCompat="@drawable/shoppingmode"
+                    tools:srcCompat="@drawable/shoppingmode" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -144,7 +148,7 @@
 
                     <TextView
                         android:id="@+id/textView12"
-                        android:layout_width="wrap_content"
+                        android:layout_width="72dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Products" />
@@ -155,6 +159,7 @@
                 android:id="@+id/categories_nav_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -163,9 +168,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:elevation="0dp"
                     android:padding="16dp"
-                    app:srcCompat="@drawable/checkbook"
-                    tools:srcCompat="@drawable/checkbook" />
+                    app:srcCompat="@drawable/category"
+                    tools:srcCompat="@drawable/category" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -177,7 +183,7 @@
 
                     <TextView
                         android:id="@+id/textView14"
-                        android:layout_width="wrap_content"
+                        android:layout_width="72dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Categories" />
@@ -188,6 +194,8 @@
                 android:id="@+id/employee_nav_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -196,9 +204,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:elevation="0dp"
                     android:padding="16dp"
-                    app:srcCompat="@drawable/checkbook"
-                    tools:srcCompat="@drawable/checkbook" />
+                    app:srcCompat="@drawable/badge"
+                    tools:srcCompat="@drawable/badge" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -210,7 +219,7 @@
 
                     <TextView
                         android:id="@+id/textView10"
-                        android:layout_width="wrap_content"
+                        android:layout_width="72dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Employee" />
@@ -219,17 +228,67 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imageView4"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:srcCompat="@drawable/ic_launcher_background" />
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Button" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    app:shapeAppearanceOverlay="@style/circleImageView"
+                    app:srcCompat="@drawable/profilepic"
+                    tools:srcCompat="@drawable/profilepic" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Andreas Lim"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView13"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Admin" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="128dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#F40000"
+                    android:text="Log Out"
+                    android:textColor="#FFFFFF"
+                    app:icon="@drawable/logout"
+                    app:iconTint="#FFFFFF" />
+            </LinearLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
