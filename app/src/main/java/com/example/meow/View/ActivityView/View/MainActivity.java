@@ -1,4 +1,4 @@
-package com.example.meow.View;
+package com.example.meow.View.ActivityView.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;

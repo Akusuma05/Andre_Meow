@@ -16,8 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.meow.R;
-import com.example.meow.View.DashboardActivity;
-import com.example.meow.View.MainActivity;
+import com.example.meow.View.ActivityView.View.DashboardActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**

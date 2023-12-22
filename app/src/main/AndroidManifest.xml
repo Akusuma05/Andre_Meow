@@ -13,11 +13,11 @@
         android:theme="@style/Theme.Meow"
         tools:targetApi="31">
         <activity
-            android:name=".View.DashboardActivity"
+            android:name=".View.ActivityView.View.DashboardActivity"
             android:exported="false"
             android:screenOrientation="landscape"/>
         <activity
-            android:name=".View.MainActivity"
+            android:name=".View.ActivityView.View.MainActivity"
             android:exported="true"
             android:screenOrientation="landscape">
             <intent-filter>
