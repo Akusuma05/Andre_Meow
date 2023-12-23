@@ -58,7 +58,6 @@ public class DashboardActivity extends AppCompatActivity {
                 dashboardActivityViewModel.fragmentMovement(dashboard, findViewById(R.id.fragmentContainerView_dashboard));
                 dashboard.setCurrentPage("order");
                 dashboard.setNextPage("");
-                Toast.makeText(DashboardActivity.this, "Order", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -74,7 +73,6 @@ public class DashboardActivity extends AppCompatActivity {
                 dashboardActivityViewModel.fragmentMovement(dashboard, findViewById(R.id.fragmentContainerView_dashboard));
                 dashboard.setCurrentPage("dashboard");
                 dashboard.setNextPage("");
-                Toast.makeText(DashboardActivity.this, "DashBoard", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -90,7 +88,6 @@ public class DashboardActivity extends AppCompatActivity {
                 dashboardActivityViewModel.fragmentMovement(dashboard, findViewById(R.id.fragmentContainerView_dashboard));
                 dashboard.setCurrentPage("product");
                 dashboard.setNextPage("");
-                Toast.makeText(DashboardActivity.this, "Products", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -106,7 +103,6 @@ public class DashboardActivity extends AppCompatActivity {
                 dashboardActivityViewModel.fragmentMovement(dashboard, findViewById(R.id.fragmentContainerView_dashboard));
                 dashboard.setCurrentPage("categories");
                 dashboard.setNextPage("");
-                Toast.makeText(DashboardActivity.this, "Categories", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -122,7 +118,6 @@ public class DashboardActivity extends AppCompatActivity {
                 dashboardActivityViewModel.fragmentMovement(dashboard, findViewById(R.id.fragmentContainerView_dashboard));
                 dashboard.setCurrentPage("employee");
                 dashboard.setNextPage("");
-                Toast.makeText(DashboardActivity.this, "Employees", Toast.LENGTH_SHORT).show();
             }
         });
 

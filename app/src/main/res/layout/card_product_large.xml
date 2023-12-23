@@ -21,7 +21,6 @@
                 android:id="@+id/imageView9"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@tools:sample/avatars"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,15 +83,13 @@
                     android:id="@+id/imageView10"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:src="@tools:sample/avatars" />
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:id="@+id/imageView11"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:src="@tools:sample/avatars" />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 

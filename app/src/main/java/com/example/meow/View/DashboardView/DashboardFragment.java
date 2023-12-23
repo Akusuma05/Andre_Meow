@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.meow.R;
@@ -197,7 +199,103 @@ public class DashboardFragment extends Fragment {
         pieChart.invalidate();
         // refresh
 
+        TableLayout table = view.findViewById(R.id.table);
+
+        // Create a new table row for the column titles
+        TableRow titleRow = new TableRow(getContext());
+        titleRow.setPadding(32, 32, 32, 32); // Add padding to the row
+
+        // Create the columns
+        TextView no = new TextView(getContext());
+        no.setText("No.");
+        titleRow.addView(no);
+
+        TextView date = new TextView(getContext());
+        date.setText("Date");
+        titleRow.addView(date);
+
+        TextView time = new TextView(getContext());
+        time.setText("Time");
+        titleRow.addView(time);
+
+        TextView categories = new TextView(getContext());
+        categories.setText("Categories");
+        titleRow.addView(categories);
+
+        TextView products = new TextView(getContext());
+        products.setText("Products");
+        titleRow.addView(products);
+
+        TextView employee = new TextView(getContext());
+        employee.setText("Employee");
+        titleRow.addView(employee);
+
+        TextView paymentMethod = new TextView(getContext());
+        paymentMethod.setText("Payment Method");
+        titleRow.addView(paymentMethod);
+
+        TextView amount = new TextView(getContext());
+        amount.setText("Amount");
+        titleRow.addView(amount);
+
+        // Add the title row to the table
+        table.addView(titleRow);
+
+        // Add a line after each row
+        View line = new View(getContext());
+        line.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+        line.setBackgroundColor(Color.DKGRAY);
+        table.addView(line);
+
+        // Add dummy data
+        for (int i = 1; i <= 10; i++) {
+            // Create a new table row
+            TableRow row = new TableRow(getContext());
+            row.setPadding(32, 32, 32, 32); // Add padding to the row
+
+            // Create the columns
+            TextView no1 = new TextView(getContext());
+            no1.setText(String.valueOf(i));
+            row.addView(no1);
+
+            TextView date1 = new TextView(getContext());
+            date1.setText("23/12/2023");
+            row.addView(date1);
+
+            TextView time1 = new TextView(getContext());
+            time1.setText("10:30 AM");
+            row.addView(time1);
+
+            TextView categories1 = new TextView(getContext());
+            categories1.setText("Category " + i);
+            row.addView(categories1);
+
+            TextView products1 = new TextView(getContext());
+            products1.setText("Product " + i);
+            row.addView(products1);
+
+            TextView employee1 = new TextView(getContext());
+            employee1.setText("Employee " + i);
+            row.addView(employee1);
+
+            TextView paymentMethod1 = new TextView(getContext());
+            paymentMethod1.setText("Payment Method " + i);
+            row.addView(paymentMethod1);
+
+            TextView amount1 = new TextView(getContext());
+            amount1.setText(String.valueOf(1500 + i));
+            row.addView(amount1);
+
+            // Add the row to the table
+            table.addView(row);
+
+            // Add a line after each row
+            View line1 = new View(getContext());
+            line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+            line1.setBackgroundColor(Color.DKGRAY);
+            table.addView(line1);
+        }
+
+
     }
-
-
 }
