@@ -17,7 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Dashboard">
+        app:title="Dashboard"
+        app:titleTextAppearance="@style/ToolbarTitleTextAppearance">
 
         <ImageView
             android:id="@+id/shopping_cart"
@@ -43,6 +44,8 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="700dp"
             app:cardCornerRadius="8dp"
             app:cardElevation="4dp"

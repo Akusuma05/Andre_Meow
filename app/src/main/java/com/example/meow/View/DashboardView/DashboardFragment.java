@@ -157,7 +157,6 @@ public class DashboardFragment extends Fragment {
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
 
-
         // Refresh the chart
         chart.invalidate();
     }
