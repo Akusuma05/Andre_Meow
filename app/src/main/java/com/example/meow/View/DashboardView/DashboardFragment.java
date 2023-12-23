@@ -2,13 +2,28 @@ package com.example.meow.View.DashboardView;
 
 import android.os.Bundle;
 
+import android.graphics.Color;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.meow.R;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,4 +78,89 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        TextView title = view.findViewById(R.id.title);
+        LineChart chart = view.findViewById(R.id.chart);
+
+        // Create some dummy data for the chart
+        List<Entry> entries = new ArrayList<>();
+        entries.add(new Entry(1, 10));
+        entries.add(new Entry(2, 15));
+        entries.add(new Entry(3, 12));
+        entries.add(new Entry(4, 18));
+        entries.add(new Entry(5, 14));
+        entries.add(new Entry(6, 16));
+        entries.add(new Entry(7, 20));
+
+        // Create a line dataset from the entries
+        LineDataSet dataSet = new LineDataSet(entries, "Values");
+        dataSet.setColor(Color.BLUE);
+        dataSet.setCircleColor(Color.BLUE);
+        dataSet.setLineWidth(2f);
+        dataSet.setCircleRadius(4f);
+
+        // Create a line data object from the dataset
+        LineData lineData = new LineData(dataSet);
+
+        // Set the data for the chart
+        chart.setData(lineData);
+
+        // Customize the chart appearance
+        chart.getDescription().setEnabled(false);
+        chart.getLegend().setEnabled(false);
+        chart.setDrawGridBackground(false);
+
+        // Customize the x axis
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f);
+        xAxis.setLabelCount(7);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                String day = "";
+                switch ((int) value) {
+                    case 1:
+                        day = "Mon";
+                        break;
+                    case 2:
+                        day = "Tues";
+                        break;
+                    case 3:
+                        day = "Wed";
+                        break;
+                    case 4:
+                        day = "Thurs";
+                        break;
+                    case 5:
+                        day = "Fri";
+                        break;
+                    case 6:
+                        day = "Sat";
+                        break;
+                    case 7:
+                        day = "Sun";
+                        break;
+                }
+                return day;
+            }
+        });
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+
+        // Disable the right y axis
+        YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setEnabled(false);
+
+
+        // Refresh the chart
+        chart.invalidate();
+    }
+
+
 }
