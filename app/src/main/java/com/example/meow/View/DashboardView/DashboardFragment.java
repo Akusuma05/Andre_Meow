@@ -15,11 +15,16 @@ import android.widget.TextView;
 
 import com.example.meow.R;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
@@ -159,6 +164,39 @@ public class DashboardFragment extends Fragment {
 
         // Refresh the chart
         chart.invalidate();
+
+        PieChart pieChart = view.findViewById(R.id.pie_chart);
+
+        List<PieEntry> entriesPie = new ArrayList<>();
+        entriesPie.add(new PieEntry(18.5f, "Green"));
+        entriesPie.add(new PieEntry(26.7f, "Yellow"));
+        entriesPie.add(new PieEntry(24.0f, "Red"));
+        entriesPie.add(new PieEntry(30.8f, "Blue"));
+
+        PieDataSet set = new PieDataSet(entriesPie, "");
+        set.setColors(Color.GREEN, Color.YELLOW, Color.RED, Color.BLUE);
+
+        // Get the description of the PieChart
+        Description description = pieChart.getDescription();
+
+        // Disable the description
+        description.setEnabled(false);
+
+        PieData data = new PieData(set);
+
+        // Disable the values
+        data.setDrawValues(false);
+
+        // Set the data for the chart
+        pieChart.setData(data);
+
+        // Disable the entry labels
+        pieChart.setDrawEntryLabels(false);
+
+        // Refresh the chart
+        pieChart.invalidate();
+        // refresh
+
     }
 
 
