@@ -1,5 +1,6 @@
 package com.example.meow.View.DashboardView;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.graphics.Color;
@@ -208,34 +209,42 @@ public class DashboardFragment extends Fragment {
         // Create the columns
         TextView no = new TextView(getContext());
         no.setText("No.");
+        no.setTypeface(no.getTypeface(), Typeface.BOLD);
         titleRow.addView(no);
 
         TextView date = new TextView(getContext());
         date.setText("Date");
+        date.setTypeface(date.getTypeface(), Typeface.BOLD);
         titleRow.addView(date);
 
         TextView time = new TextView(getContext());
         time.setText("Time");
+        time.setTypeface(time.getTypeface(), Typeface.BOLD);
         titleRow.addView(time);
 
         TextView categories = new TextView(getContext());
         categories.setText("Categories");
+        categories.setTypeface(categories.getTypeface(), Typeface.BOLD);
         titleRow.addView(categories);
 
         TextView products = new TextView(getContext());
         products.setText("Products");
+        products.setTypeface(products.getTypeface(), Typeface.BOLD);
         titleRow.addView(products);
 
         TextView employee = new TextView(getContext());
         employee.setText("Employee");
+        employee.setTypeface(employee.getTypeface(), Typeface.BOLD);
         titleRow.addView(employee);
 
         TextView paymentMethod = new TextView(getContext());
         paymentMethod.setText("Payment Method");
+        paymentMethod.setTypeface(paymentMethod.getTypeface(), Typeface.BOLD);
         titleRow.addView(paymentMethod);
 
         TextView amount = new TextView(getContext());
         amount.setText("Amount");
+        amount.setTypeface(amount.getTypeface(), Typeface.BOLD);
         titleRow.addView(amount);
 
         // Add the title row to the table

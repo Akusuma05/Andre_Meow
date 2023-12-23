@@ -1,12 +1,22 @@
 package com.example.meow.View.CategoriesView;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.meow.R;
 
@@ -62,5 +72,93 @@ public class CategoriesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_categories, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TableLayout table = view.findViewById(R.id.table2);
+
+        // Create a new table row for the column titles
+        TableRow titleRow = new TableRow(getContext());
+        titleRow.setPadding(32, 32, 32, 32); // Add padding to the row
+
+        // Create the columns
+        TextView categories = new TextView(getContext());
+        categories.setText("Categories");
+        categories.setTypeface(categories.getTypeface(), Typeface.BOLD);
+        titleRow.addView(categories);
+
+        TextView date = new TextView(getContext());
+        date.setText("Stock");
+        date.setTypeface(date.getTypeface(), Typeface.BOLD);
+        titleRow.addView(date);
+
+        TextView time = new TextView(getContext());
+        time.setText("Action");
+        time.setTypeface(time.getTypeface(), Typeface.BOLD);
+        titleRow.addView(time);
+
+        // Add the title row to the table
+        table.addView(titleRow);
+
+        // Add a line after each row
+        View line = new View(getContext());
+        line.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+        line.setBackgroundColor(Color.DKGRAY);
+        table.addView(line);
+
+        for (int i = 1; i <= 10; i++) {
+            // Create a new table row for the column titles
+            TableRow tableRowCategories = new TableRow(getContext());
+            tableRowCategories.setPadding(32, 32, 32, 32); // Add padding to the row
+
+            // Create the columns
+            TextView categories1 = new TextView(getContext());
+            categories1.setText("Categories" + i);
+            tableRowCategories.addView(categories1);
+
+            // Create the columns
+            TextView stock = new TextView(getContext());
+            stock.setText(String.valueOf(i));
+            tableRowCategories.addView(stock);
+
+            LinearLayout iconColumn = new LinearLayout(getContext());
+            iconColumn.setOrientation(LinearLayout.HORIZONTAL);
+
+            ImageView icon1 = new ImageView(getContext());
+            icon1.setImageResource(R.drawable.edit);
+            icon1.setPadding(16, 16, 16, 16);
+            icon1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                }
+            });
+            iconColumn.addView(icon1);
+
+            ImageView icon2 = new ImageView(getContext());
+            icon2.setImageResource(R.drawable.delete);
+            icon2.setPadding(16, 16, 16, 16);
+            icon2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Icon 2 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                }
+            });
+            iconColumn.addView(icon2);
+
+            tableRowCategories.addView(iconColumn);
+
+            // Add the row to the table
+            table.addView(tableRowCategories);
+
+            // Add a line after each row
+            View line1 = new View(getContext());
+            line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+            line1.setBackgroundColor(Color.DKGRAY);
+            table.addView(line1);
+        }
     }
 }

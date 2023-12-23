@@ -1,12 +1,22 @@
 package com.example.meow.View.ProductView;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.meow.R;
 
@@ -62,5 +72,133 @@ public class ProductFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_product, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        TableLayout table = view.findViewById(R.id.table3);
+
+        // Create a new table row for the column titles
+        TableRow titleRow = new TableRow(getContext());
+        titleRow.setPadding(32, 32, 32, 32); // Add padding to the row
+
+        // Create the columns
+        TextView photo = new TextView(getContext());
+        photo.setText("Photo");
+        photo.setTypeface(photo.getTypeface(), Typeface.BOLD);
+        titleRow.addView(photo);
+
+        TextView name = new TextView(getContext());
+        name.setText("Name");
+        name.setTypeface(name.getTypeface(), Typeface.BOLD);
+        titleRow.addView(name);
+
+        TextView barcode = new TextView(getContext());
+        barcode.setText("Barcode");
+        barcode.setTypeface(barcode.getTypeface(), Typeface.BOLD);
+        titleRow.addView(barcode);
+
+        TextView categories = new TextView(getContext());
+        categories.setText("Category");
+        categories.setTypeface(categories.getTypeface(), Typeface.BOLD);
+        titleRow.addView(categories);
+
+        TextView stock = new TextView(getContext());
+        stock.setText("Stock");
+        stock.setTypeface(stock.getTypeface(), Typeface.BOLD);
+        titleRow.addView(stock);
+
+        TextView price = new TextView(getContext());
+        price.setText("Price");
+        price.setTypeface(price.getTypeface(), Typeface.BOLD);
+        titleRow.addView(price);
+
+        TextView action = new TextView(getContext());
+        action.setText("Action");
+        action.setTypeface(action.getTypeface(), Typeface.BOLD);
+        titleRow.addView(action);
+
+        // Add the title row to the table
+        table.addView(titleRow);
+
+        // Add a line after each row
+        View line = new View(getContext());
+        line.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+        line.setBackgroundColor(Color.DKGRAY);
+        table.addView(line);
+
+        for (int i = 1; i <= 10; i++) {
+            // Create a new table row for the column titles
+            TableRow tableRowProduct = new TableRow(getContext());
+            tableRowProduct.setPadding(32, 32, 32, 32); // Add padding to the row
+
+            ImageView icon3 = new ImageView(getContext());
+            icon3.setImageResource(R.drawable.profilepic);
+            icon3.setPadding(16, 16, 16, 16);
+            tableRowProduct.addView(icon3);
+
+            // Create the columns
+            TextView name1 = new TextView(getContext());
+            name1.setText("Name" + i);
+            tableRowProduct.addView(name1);
+
+            // Create the columns
+            TextView barcode1 = new TextView(getContext());
+            barcode1.setText("Barcode" + i);
+            tableRowProduct.addView(barcode1);
+
+            // Create the columns
+            TextView category1 = new TextView(getContext());
+            category1.setText("Category" + i);
+            tableRowProduct.addView(category1);
+
+            // Create the columns
+            TextView stock1 = new TextView(getContext());
+            stock1.setText(String.valueOf(i));
+            tableRowProduct.addView(stock1);
+
+            // Create the columns
+            TextView price1 = new TextView(getContext());
+            price1.setText("Price" + i);
+            tableRowProduct.addView(price1);
+
+            LinearLayout iconColumn = new LinearLayout(getContext());
+            iconColumn.setOrientation(LinearLayout.HORIZONTAL);
+
+            ImageView icon1 = new ImageView(getContext());
+            icon1.setImageResource(R.drawable.edit);
+            icon1.setPadding(16, 16, 16, 16);
+            icon1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                }
+            });
+            iconColumn.addView(icon1);
+
+            ImageView icon2 = new ImageView(getContext());
+            icon2.setImageResource(R.drawable.delete);
+            icon2.setPadding(16, 16, 16, 16);
+            icon2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getContext(), "Icon 2 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                }
+            });
+            iconColumn.addView(icon2);
+
+            tableRowProduct.addView(iconColumn);
+
+            // Add the row to the table
+            table.addView(tableRowProduct);
+
+            // Add a line after each row
+            View line1 = new View(getContext());
+            line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
+            line1.setBackgroundColor(Color.DKGRAY);
+            table.addView(line1);
+        }
     }
 }
