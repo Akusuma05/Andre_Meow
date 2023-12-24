@@ -263,14 +263,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView8"
+                        android:id="@+id/name_card_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Andreas Lim"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/categories_card_product"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Admin" />

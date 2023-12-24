@@ -2,13 +2,21 @@ package com.example.meow.View.OrderView;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.meow.Model.RecyclerView_Items;
 import com.example.meow.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +24,9 @@ import com.example.meow.R;
  * create an instance of this fragment.
  */
 public class OrderFragment extends Fragment {
+
+    ArrayList<RecyclerView_Items> recyclerViewItems;
+    RecyclerView recyclerView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -62,5 +73,28 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_order, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        recyclerView = view.findViewById(R.id.recyclerview_order);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
+
+        recyclerViewItems = new ArrayList<RecyclerView_Items>();
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
+
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(recyclerViewItems, getContext());
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 }
