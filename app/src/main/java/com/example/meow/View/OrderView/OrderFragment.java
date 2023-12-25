@@ -1,5 +1,9 @@
 package com.example.meow.View.OrderView;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+import static androidx.core.content.ContextCompat.getSystemService;
+
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,9 +13,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.example.meow.Model.RecyclerView_Items;
 import com.example.meow.R;
@@ -27,6 +37,8 @@ public class OrderFragment extends Fragment {
 
     ArrayList<RecyclerView_Items> recyclerViewItems;
     RecyclerView recyclerView;
+    ImageView shopping_cart_order;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +91,8 @@ public class OrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recyclerview_order);
+        shopping_cart_order = view.findViewById(R.id.shopping_cart_order);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
 
@@ -96,5 +110,46 @@ public class OrderFragment extends Fragment {
 
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(recyclerViewItems, getContext());
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        shopping_cart_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPopUpShoppingCart(getContext(), getView());
+            }
+        });
     }
+
+    private void createPopUpShoppingCart(Context context, View layout) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.popup_shoppingcart, null);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
+        layout.post(new Runnable(){
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            }
+        });
+        Button back_button_shopping_cart;
+        back_button_shopping_cart = popupWindow.getContentView().findViewById(R.id.back_button_shopping_cart);
+        back_button_shopping_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return false;
+            }
+        });
+    }
+
+
+
 }
