@@ -18,6 +18,7 @@ public class ShoppingCartHelper {
      *
      * Input: getContext(), getView()
      * Elements: back_button_shopping_cart, popupView
+     * Output: popup_shoppingcart
      *
      * Usage: Fragment Dashboard, Order, Product, Categories, Employee
      * */

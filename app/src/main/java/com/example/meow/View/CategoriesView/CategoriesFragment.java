@@ -103,10 +103,7 @@ public class CategoriesFragment extends Fragment {
             }
         });
 
-
         //Function Membuat Table
         CategoriesViewModel.createTableCategories(getContext(), getView());
     }
-
-
 }

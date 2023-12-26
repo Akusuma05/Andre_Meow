@@ -36,11 +36,6 @@ import java.util.ArrayList;
  */
 public class OrderFragment extends Fragment {
 
-    ArrayList<RecyclerView_Items> recyclerViewItems;
-    RecyclerView recyclerView;
-    ImageView shopping_cart_order;
-
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -91,27 +86,13 @@ public class OrderFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recyclerview_order);
-        shopping_cart_order = view.findViewById(R.id.shopping_cart_order);
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 5));
+        //RecylerView
+        ArrayList<RecyclerView_Items> recyclerViewItems = new ArrayList<RecyclerView_Items>();
+        OrderViewModel.RecyclerViewOrder(getView(), getContext(), recyclerViewItems);
 
-        recyclerViewItems = new ArrayList<RecyclerView_Items>();
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-        recyclerViewItems.add(new RecyclerView_Items(R.drawable.profilepic, "Test", "Uhh", "1999", "IDR 1000"));
-
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(recyclerViewItems, getContext());
-        recyclerView.setAdapter(recyclerViewAdapter);
-
+        //Tombol Shopping Cart
+        ImageView shopping_cart_order = view.findViewById(R.id.shopping_cart_order);
         shopping_cart_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,6 +100,4 @@ public class OrderFragment extends Fragment {
             }
         });
     }
-
-
 }

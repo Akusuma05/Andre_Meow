@@ -33,9 +33,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  */
 public class EmployeeFragment extends Fragment {
 
-    FloatingActionButton floatingActionButton_employee;
-    ImageView shopping_cart_employee;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,233 +83,26 @@ public class EmployeeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TableLayout table_active_employee = view.findViewById(R.id.table_active_employee);
-        TableLayout table_pending_employee = view.findViewById(R.id.table_pending_employee);
-        floatingActionButton_employee = view.findViewById(R.id.floatingActionButton_employee);
-        shopping_cart_employee = view.findViewById(R.id.shopping_cart_employee);
 
-        // Create a new table row for the column titles
-        TableRow tableActiveEmployee = new TableRow(getContext());
-        tableActiveEmployee.setPadding(32, 32, 32, 32); // Add padding to the row
-
-        // Create the columns
-        TextView name = new TextView(getContext());
-        name.setText("Name");
-        name.setTypeface(name.getTypeface(), Typeface.BOLD);
-        tableActiveEmployee.addView(name);
-
-        TextView phone = new TextView(getContext());
-        phone.setText("Phone Number");
-        phone.setTypeface(phone.getTypeface(), Typeface.BOLD);
-        tableActiveEmployee.addView(phone);
-
-        TextView action = new TextView(getContext());
-        action.setText("Action");
-        action.setTypeface(action.getTypeface(), Typeface.BOLD);
-        tableActiveEmployee.addView(action);
-
-        // Add the title row to the table
-        table_active_employee.addView(tableActiveEmployee);
-
-        // Add a line after each row
-        View line = new View(getContext());
-        line.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-        line.setBackgroundColor(Color.DKGRAY);
-        table_active_employee.addView(line);
-
-        for (int i = 1; i <= 10; i++) {
-            // Create a new table row for the column titles
-            TableRow tableActiveEmployeeContent = new TableRow(getContext());
-            tableActiveEmployeeContent.setPadding(32, 32, 32, 32); // Add padding to the row
-
-            // Create the columns
-            TextView name1 = new TextView(getContext());
-            name1.setText("Name" + i);
-            tableActiveEmployeeContent.addView(name1);
-
-            // Create the columns
-            TextView phone1 = new TextView(getContext());
-            phone1.setText(String.valueOf(i));
-            tableActiveEmployeeContent.addView(phone1);
-
-            LinearLayout iconColumn = new LinearLayout(getContext());
-            iconColumn.setOrientation(LinearLayout.HORIZONTAL);
-
-            ImageView icon1 = new ImageView(getContext());
-            icon1.setImageResource(R.drawable.edit);
-            icon1.setPadding(16, 16, 16, 16);
-            icon1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Icon 1 in " + name1.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                    createPopUpEditEmployee(getContext(), getView());
-                }
-            });
-            iconColumn.addView(icon1);
-
-            ImageView icon2 = new ImageView(getContext());
-            icon2.setImageResource(R.drawable.delete);
-            icon2.setPadding(16, 16, 16, 16);
-            icon2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Icon 2 in " + name1.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                }
-            });
-            iconColumn.addView(icon2);
-
-            tableActiveEmployeeContent.addView(iconColumn);
-
-            // Add the row to the table
-            table_active_employee.addView(tableActiveEmployeeContent);
-
-            // Add a line after each row
-            View line1 = new View(getContext());
-            line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-            line1.setBackgroundColor(Color.DKGRAY);
-            table_active_employee.addView(line1);
-        }
-
-
-        // Create a new table row for the column titles
-        TableRow tablePendingEmployee = new TableRow(getContext());
-        tablePendingEmployee.setPadding(32, 32, 32, 32); // Add padding to the row
-
-        // Create the columns
-        TextView name3 = new TextView(getContext());
-        name3.setText("Name");
-        name3.setTypeface(name3.getTypeface(), Typeface.BOLD);
-        tablePendingEmployee.addView(name3);
-
-        TextView phone3 = new TextView(getContext());
-        phone3.setText("Phone Number");
-        phone3.setTypeface(phone3.getTypeface(), Typeface.BOLD);
-        tablePendingEmployee.addView(phone3);
-
-        TextView action3 = new TextView(getContext());
-        action3.setText("Action");
-        action3.setTypeface(action3.getTypeface(), Typeface.BOLD);
-        tablePendingEmployee.addView(action3);
-
-        // Add the title row to the table
-        table_pending_employee.addView(tablePendingEmployee);
-
-        // Add a line after each row
-        View line2 = new View(getContext());
-        line2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-        line2.setBackgroundColor(Color.DKGRAY);
-        table_pending_employee.addView(line2);
-
-        for (int i = 1; i <= 10; i++) {
-            // Create a new table row for the column titles
-            TableRow tablePendingEmployeeContent = new TableRow(getContext());
-            tablePendingEmployeeContent.setPadding(32, 32, 32, 32); // Add padding to the row
-
-            // Create the columns
-            TextView name1 = new TextView(getContext());
-            name1.setText("Name" + i);
-            tablePendingEmployeeContent.addView(name1);
-
-            // Create the columns
-            TextView phone1 = new TextView(getContext());
-            phone1.setText(String.valueOf(i));
-            tablePendingEmployeeContent.addView(phone1);
-
-            LinearLayout iconColumn = new LinearLayout(getContext());
-            iconColumn.setOrientation(LinearLayout.HORIZONTAL);
-
-            ImageView icon1 = new ImageView(getContext());
-            icon1.setImageResource(R.drawable.check_box);
-            icon1.setPadding(16, 16, 16, 16);
-            icon1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Icon 1 in " + name1.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                }
-            });
-            iconColumn.addView(icon1);
-
-            ImageView icon2 = new ImageView(getContext());
-            icon2.setImageResource(R.drawable.cross_box);
-            icon2.setPadding(16, 16, 16, 16);
-            icon2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Icon 2 in " + name1.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                }
-            });
-            iconColumn.addView(icon2);
-
-            tablePendingEmployeeContent.addView(iconColumn);
-
-            // Add the row to the table
-            table_pending_employee.addView(tablePendingEmployeeContent);
-
-            // Add a line after each row
-            View line1 = new View(getContext());
-            line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-            line1.setBackgroundColor(Color.DKGRAY);
-            table_pending_employee.addView(line1);
-
-            floatingActionButton_employee.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createPopUpAddEmployee(getContext(), getView());
-                }
-            });
-
-            shopping_cart_employee.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
-                }
-            });
-        }
-    }
-
-    private void createPopUpAddEmployee(Context context, View layout) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popUpView = inflater.inflate(R.layout.popup_add_employee, null);
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        boolean focusable = true;
-        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
-        layout.post(new Runnable(){
+        //Add Employee Button
+        FloatingActionButton floatingActionButton_employee = view.findViewById(R.id.floatingActionButton_employee);
+        floatingActionButton_employee.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            public void onClick(View v) {
+                EmployeeViewModel.createPopUpAddEmployee(getContext(), getView());
             }
         });
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return false;
-            }
-        });
-    }
 
-    private void createPopUpEditEmployee(Context context, View layout) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popUpView = inflater.inflate(R.layout.popup_edit_employee, null);
+        //Shopping Cart Button
+        ImageView shopping_cart_employee = view.findViewById(R.id.shopping_cart_employee);
+        shopping_cart_employee.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
+            }
+        });
 
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        boolean focusable = true;
-        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
-        layout.post(new Runnable(){
-            @Override
-            public void run() {
-                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
-            }
-        });
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return false;
-            }
-        });
+        EmployeeViewModel.createActiveEmployeeTable(getView(), getContext());
+        EmployeeViewModel.createPendingEmployeeTable(getView(), getContext());
     }
 }

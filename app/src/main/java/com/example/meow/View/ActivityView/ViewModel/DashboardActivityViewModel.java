@@ -19,6 +19,15 @@ import com.example.meow.View.ProductView.ProductFragmentDirections;
 
 public class DashboardActivityViewModel extends ViewModel {
 
+    /**
+     * Function Buat Pindah Halaman di Dashboard Activity
+     *
+     * Input: Dashboard, getView()
+     * Elements: navController, NavDirections
+     * Output: Perpindahan Fragment di Dashboard Activity
+     *
+     * Usage: Dashboard Activity
+     * */
     public void fragmentMovement(Dashboard dashboard, View view){
         NavDirections action;
         NavController navController = Navigation.findNavController(view);
@@ -134,7 +143,5 @@ public class DashboardActivityViewModel extends ViewModel {
                 }
                 break;
         }
-
-
     }
 }
