@@ -183,6 +183,7 @@ public class ProductFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getContext(), "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                    createPopUpEditProduct(getContext(), getView());
                 }
             });
             iconColumn.addView(icon1);
@@ -222,6 +223,29 @@ public class ProductFragment extends Fragment {
     private void createPopUpAddProduct(Context context, View layout) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.popup_add_product, null);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
+        layout.post(new Runnable(){
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            }
+        });
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return false;
+            }
+        });
+    }
+
+    private void createPopUpEditProduct(Context context, View layout) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.popup_edit_product, null);
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;

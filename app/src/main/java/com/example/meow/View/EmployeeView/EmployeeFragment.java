@@ -1,5 +1,6 @@
 package com.example.meow.View.EmployeeView;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,11 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -27,6 +31,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class EmployeeFragment extends Fragment {
+
+    FloatingActionButton floatingActionButton_employee;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,6 +86,7 @@ public class EmployeeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TableLayout table_active_employee = view.findViewById(R.id.table_active_employee);
         TableLayout table_pending_employee = view.findViewById(R.id.table_pending_employee);
+        floatingActionButton_employee = view.findViewById(R.id.floatingActionButton_employee);
 
         // Create a new table row for the column titles
         TableRow tableActiveEmployee = new TableRow(getContext());
@@ -135,6 +142,7 @@ public class EmployeeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getContext(), "Icon 1 in " + name1.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                    createPopUpEditEmployee(getContext(), getView());
                 }
             });
             iconColumn.addView(icon1);
@@ -242,6 +250,59 @@ public class EmployeeFragment extends Fragment {
             line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
             line1.setBackgroundColor(Color.DKGRAY);
             table_pending_employee.addView(line1);
+
+            floatingActionButton_employee.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createPopUpAddEmployee(getContext(), getView());
+                }
+            });
         }
+    }
+
+    private void createPopUpAddEmployee(Context context, View layout) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.popup_add_employee, null);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
+        layout.post(new Runnable(){
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            }
+        });
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return false;
+            }
+        });
+    }
+
+    private void createPopUpEditEmployee(Context context, View layout) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.popup_edit_employee, null);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
+        layout.post(new Runnable(){
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            }
+        });
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return false;
+            }
+        });
     }
 }

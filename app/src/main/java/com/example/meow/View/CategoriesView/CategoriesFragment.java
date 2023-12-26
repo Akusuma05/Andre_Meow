@@ -1,5 +1,6 @@
 package com.example.meow.View.CategoriesView;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -8,17 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meow.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +31,8 @@ import com.example.meow.R;
  * create an instance of this fragment.
  */
 public class CategoriesFragment extends Fragment {
+
+    FloatingActionButton floatingActionButton_categories;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +86,7 @@ public class CategoriesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TableLayout table = view.findViewById(R.id.table2);
+        floatingActionButton_categories = view.findViewById(R.id.floatingActionButton_categories);
 
         // Create a new table row for the column titles
         TableRow titleRow = new TableRow(getContext());
@@ -134,6 +142,7 @@ public class CategoriesFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(getContext(), "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                    createPopUpAddCategory(getContext(), getView());
                 }
             });
             iconColumn.addView(icon1);
@@ -159,6 +168,36 @@ public class CategoriesFragment extends Fragment {
             line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
             line1.setBackgroundColor(Color.DKGRAY);
             table.addView(line1);
+
+            floatingActionButton_categories.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createPopUpAddCategory(getContext(), getView());
+                }
+            });
         }
+    }
+
+    private void createPopUpAddCategory(Context context, View layout) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View popUpView = inflater.inflate(R.layout.popup_add_categories, null);
+
+        int width = ViewGroup.LayoutParams.MATCH_PARENT;
+        int height = ViewGroup.LayoutParams.MATCH_PARENT;
+        boolean focusable = true;
+        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
+        layout.post(new Runnable(){
+            @Override
+            public void run() {
+                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            }
+        });
+        popUpView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                popupWindow.dismiss();
+                return false;
+            }
+        });
     }
 }
