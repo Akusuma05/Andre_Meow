@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meow.R;
+import com.example.meow.View.Helper.ShoppingCartHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -33,6 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class EmployeeFragment extends Fragment {
 
     FloatingActionButton floatingActionButton_employee;
+    ImageView shopping_cart_employee;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,6 +89,7 @@ public class EmployeeFragment extends Fragment {
         TableLayout table_active_employee = view.findViewById(R.id.table_active_employee);
         TableLayout table_pending_employee = view.findViewById(R.id.table_pending_employee);
         floatingActionButton_employee = view.findViewById(R.id.floatingActionButton_employee);
+        shopping_cart_employee = view.findViewById(R.id.shopping_cart_employee);
 
         // Create a new table row for the column titles
         TableRow tableActiveEmployee = new TableRow(getContext());
@@ -255,6 +258,13 @@ public class EmployeeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     createPopUpAddEmployee(getContext(), getView());
+                }
+            });
+
+            shopping_cart_employee.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
                 }
             });
         }

@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.example.meow.Model.RecyclerView_Items;
 import com.example.meow.R;
+import com.example.meow.View.Helper.ShoppingCartHelper;
 
 import java.util.ArrayList;
 
@@ -114,42 +115,10 @@ public class OrderFragment extends Fragment {
         shopping_cart_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createPopUpShoppingCart(getContext(), getView());
+                ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
             }
         });
     }
-
-    private void createPopUpShoppingCart(Context context, View layout) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popUpView = inflater.inflate(R.layout.popup_shoppingcart, null);
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        boolean focusable = true;
-        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
-        layout.post(new Runnable(){
-            @Override
-            public void run() {
-                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
-            }
-        });
-        Button back_button_shopping_cart;
-        back_button_shopping_cart = popupWindow.getContentView().findViewById(R.id.back_button_shopping_cart);
-        back_button_shopping_cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popupWindow.dismiss();
-            }
-        });
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return false;
-            }
-        });
-    }
-
 
 
 }

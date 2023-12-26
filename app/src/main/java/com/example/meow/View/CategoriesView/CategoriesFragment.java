@@ -3,6 +3,7 @@ package com.example.meow.View.CategoriesView;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meow.R;
+import com.example.meow.View.Helper.ShoppingCartHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -31,8 +33,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class CategoriesFragment extends Fragment {
-
-    FloatingActionButton floatingActionButton_categories;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,119 +85,28 @@ public class CategoriesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TableLayout table = view.findViewById(R.id.table2);
-        floatingActionButton_categories = view.findViewById(R.id.floatingActionButton_categories);
-
-        // Create a new table row for the column titles
-        TableRow titleRow = new TableRow(getContext());
-        titleRow.setPadding(32, 32, 32, 32); // Add padding to the row
-
-        // Create the columns
-        TextView categories = new TextView(getContext());
-        categories.setText("Categories");
-        categories.setTypeface(categories.getTypeface(), Typeface.BOLD);
-        titleRow.addView(categories);
-
-        TextView date = new TextView(getContext());
-        date.setText("Stock");
-        date.setTypeface(date.getTypeface(), Typeface.BOLD);
-        titleRow.addView(date);
-
-        TextView time = new TextView(getContext());
-        time.setText("Action");
-        time.setTypeface(time.getTypeface(), Typeface.BOLD);
-        titleRow.addView(time);
-
-        // Add the title row to the table
-        table.addView(titleRow);
-
-        // Add a line after each row
-        View line = new View(getContext());
-        line.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-        line.setBackgroundColor(Color.DKGRAY);
-        table.addView(line);
-
-        for (int i = 1; i <= 10; i++) {
-            // Create a new table row for the column titles
-            TableRow tableRowCategories = new TableRow(getContext());
-            tableRowCategories.setPadding(32, 32, 32, 32); // Add padding to the row
-
-            // Create the columns
-            TextView categories1 = new TextView(getContext());
-            categories1.setText("Categories" + i);
-            tableRowCategories.addView(categories1);
-
-            // Create the columns
-            TextView stock = new TextView(getContext());
-            stock.setText(String.valueOf(i));
-            tableRowCategories.addView(stock);
-
-            LinearLayout iconColumn = new LinearLayout(getContext());
-            iconColumn.setOrientation(LinearLayout.HORIZONTAL);
-
-            ImageView icon1 = new ImageView(getContext());
-            icon1.setImageResource(R.drawable.edit);
-            icon1.setPadding(16, 16, 16, 16);
-            icon1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                    createPopUpAddCategory(getContext(), getView());
-                }
-            });
-            iconColumn.addView(icon1);
-
-            ImageView icon2 = new ImageView(getContext());
-            icon2.setImageResource(R.drawable.delete);
-            icon2.setPadding(16, 16, 16, 16);
-            icon2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(getContext(), "Icon 2 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                }
-            });
-            iconColumn.addView(icon2);
-
-            tableRowCategories.addView(iconColumn);
-
-            // Add the row to the table
-            table.addView(tableRowCategories);
-
-            // Add a line after each row
-            View line1 = new View(getContext());
-            line1.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, 1));
-            line1.setBackgroundColor(Color.DKGRAY);
-            table.addView(line1);
-
-            floatingActionButton_categories.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    createPopUpAddCategory(getContext(), getView());
-                }
-            });
-        }
-    }
-
-    private void createPopUpAddCategory(Context context, View layout) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View popUpView = inflater.inflate(R.layout.popup_add_categories, null);
-
-        int width = ViewGroup.LayoutParams.MATCH_PARENT;
-        int height = ViewGroup.LayoutParams.MATCH_PARENT;
-        boolean focusable = true;
-        PopupWindow popupWindow = new PopupWindow(popUpView,width,height,focusable);
-        layout.post(new Runnable(){
+        //Tombol Shopping Cart
+        ImageView shopping_cart_categories = view.findViewById(R.id.shopping_cart_categories);
+        shopping_cart_categories.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                popupWindow.showAtLocation(layout, Gravity.RIGHT, 0, 0);
+            public void onClick(View v) {
+                ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
             }
         });
-        popUpView.setOnTouchListener(new View.OnTouchListener() {
+
+        //Tombol Categories
+        FloatingActionButton floatingActionButton_categories = view.findViewById(R.id.floatingActionButton_categories);
+        floatingActionButton_categories.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                popupWindow.dismiss();
-                return false;
+            public void onClick(View v) {
+                CategoriesViewModel.createPopUpAddCategory(getContext(), getView());
             }
         });
+
+
+        //Function Membuat Table
+        CategoriesViewModel.createTableCategories(getContext(), getView());
     }
+
+
 }

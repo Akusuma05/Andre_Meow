@@ -12,11 +12,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.meow.R;
+import com.example.meow.View.Helper.ShoppingCartHelper;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -92,6 +94,14 @@ public class DashboardFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         TextView title = view.findViewById(R.id.title);
         LineChart chart = view.findViewById(R.id.chart);
+        ImageView shopping_cart_dashboard = view.findViewById(R.id.shopping_cart_dashboard);
+
+        shopping_cart_dashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
+            }
+        });
 
         // Create some dummy data for the chart
         List<Entry> entries = new ArrayList<>();

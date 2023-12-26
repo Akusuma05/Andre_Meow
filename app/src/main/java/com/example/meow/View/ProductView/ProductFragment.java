@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.meow.R;
+import com.example.meow.View.Helper.ShoppingCartHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
@@ -34,6 +35,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class ProductFragment extends Fragment {
 
     FloatingActionButton floatingActionButton_product;
+    ImageView shopping_cart_product;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,6 +90,7 @@ public class ProductFragment extends Fragment {
 
         TableLayout table = view.findViewById(R.id.table3);
         floatingActionButton_product = view.findViewById(R.id.floatingActionButton_product);
+        shopping_cart_product = view.findViewById(R.id.shopping_cart_product);
 
         // Create a new table row for the column titles
         TableRow titleRow = new TableRow(getContext());
@@ -214,6 +217,13 @@ public class ProductFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     createPopUpAddProduct(getContext(), getView());
+                }
+            });
+
+            shopping_cart_product.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ShoppingCartHelper.createPopUpShoppingCart(getContext(), getView());
                 }
             });
         }
