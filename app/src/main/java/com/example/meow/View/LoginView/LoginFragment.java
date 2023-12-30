@@ -1,23 +1,42 @@
 package com.example.meow.View.LoginView;
 
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.meow.Helper.Const;
+import com.example.meow.Model.Profile;
 import com.example.meow.R;
+import com.example.meow.Retrofit.ApiEndPoints;
 import com.example.meow.View.ActivityView.View.DashboardActivity;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +48,8 @@ public class LoginFragment extends Fragment {
     TextView btn_reg;
     TextInputLayout username_login, pass_login;
     Button btn_login;
+
+    private LoginViewModel loginViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,6 +115,37 @@ public class LoginFragment extends Fragment {
         btn_login = view.findViewById(R.id.login_button_login);
         btn_reg = view.findViewById(R.id.register_button_login);
 
+        Log.d("LoginFragment", "Login Fragment");
+        loginViewModel = new ViewModelProvider(getActivity()).get(LoginViewModel.class);
+        loginViewModel.init();
+        loginViewModel.getUserViewModel();
+        loginViewModel.getResultProfile().observe(getViewLifecycleOwner(), new Observer<List<Profile>>() {
+            @Override
+            public void onChanged(List<Profile> profiles) {
+                // Update your UI here with the profiles
+            }
+        });
+
+        btn_login.setOnClickListener(view1 -> {
+            if(!username_login.getEditText().getText().toString().trim().isEmpty() &&
+                    !pass_login.getEditText().getText().toString().trim().isEmpty()){
+                String username = username_login.getEditText().getText().toString().trim();
+                String pass = pass_login.getEditText().getText().toString().trim();
+                List<Profile> profiles = loginViewModel.getResultProfile().getValue();
+                for (Profile profile : profiles){
+                    if(profile.getName().equals(username) && profile.getPassword().equals(pass)){
+                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+                        startActivity(intent);
+                        return;
+                    }
+                }
+                Toast.makeText(getActivity(), "Wrong Username or Password",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+
+
         /**
          * Tombol Register Here samping tulisan don't have account
          *
@@ -113,15 +165,26 @@ public class LoginFragment extends Fragment {
          * @Input username_login, pass_login
          * @Output kalau sesuai pindah ke activity_dashboard
          */
-        btn_login.setOnClickListener(view1 -> {
-//            if(!username_login.getEditText().getText().toString().trim().isEmpty() &&
-//                    pass_login.getEditText().getText().toString().trim().isEmpty()){
-//                String username = username_login.getEditText().getText().toString().trim();
-//                String pass = pass_login.getEditText().getText().toString().trim();
-//            }
-            Intent intent = new Intent(getActivity(), DashboardActivity.class);
-            intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(intent);
-        });
+
     }
+
+    List<Profile> results = new ArrayList<>();
+
+    private Observer<Profile> showUser = new Observer<Profile>() {
+        @Override
+        public void onChanged(Profile profile) {
+//            results = profile.getCourses();
+//            linearLayoutManager = new LinearLayoutManager(getActivity());
+//            recyclerView.setLayoutManager(linearLayoutManager);
+//            courseAdapter = new CourseAdapter(getActivity());
+//            courseAdapter.setCoursesList(results);
+//            recyclerView.setAdapter(courseAdapter);
+//            for(int x = 0; x <= 2; x++){
+//                Log.wtf("Andre manuk: ", profile.getName());
+//            }
+            btn_reg.setText(profile.getName());
+            btn_login.setText(profile.getName());
+        }
+    };
+
 }
