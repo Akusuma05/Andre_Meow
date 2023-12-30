@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 
@@ -14,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.meow.R;
+import com.example.meow.View.LoginView.LoginViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 
 /**
@@ -99,6 +102,9 @@ public class RegisterFragment extends Fragment {
         btn_login = view.findViewById(R.id.login_button_register);
         btn_regis = view.findViewById(R.id.register_button_register);
 
+        RegisterViewModel registerViewModel = new ViewModelProvider(getActivity()).get(RegisterViewModel.class);
+        registerViewModel.init();
+
         /**
          * Tombol Login Here samping tulisan have an account
          *
@@ -119,7 +125,31 @@ public class RegisterFragment extends Fragment {
          * @Output kalau sesuai pindah ke activity_dashboard
          */
         btn_regis.setOnClickListener(view1 -> {
+            if (!username_regis.getEditText().getText().toString().isEmpty()
+                    && !pass_regis.getEditText().getText().toString().isEmpty()
+                    && !address_regis.getEditText().getText().toString().isEmpty()
+                    && !phone_regis.getEditText().getText().toString().isEmpty()){
+                String name = username_regis.getEditText().getText().toString().trim();
+                String password = pass_regis.getEditText().getText().toString().trim();
+                String address = address_regis.getEditText().getText().toString().trim();
+                String phone = phone_regis.getEditText().getText().toString().trim();
+//                String name = "Andre8";
+//                String password = "a123";
+//                String address = "surabaya";
+//                String phone = "08112345678";
+                String photo_path = "sadsasa.jpg";
+                String roles = "owner";
 
+                registerViewModel.register(name, password, photo_path, address, phone, roles).observe(requireActivity(), registerResponse -> {
+                    if (registerResponse != null){
+                        Toast.makeText(requireActivity(), "Register Success", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(requireActivity(), "Regsiter Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }else{
+                Toast.makeText(requireActivity(), "All field must not empty", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
