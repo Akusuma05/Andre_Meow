@@ -1,5 +1,6 @@
 package com.example.meow.Retrofit;
 
+import com.example.meow.Model.Categories;
 import com.example.meow.Model.Profile;
 
 import org.json.JSONObject;
@@ -27,5 +28,13 @@ public interface ApiEndPoints {
 
     @GET("user")
     Call<List<Profile>>getUser();
+
+    @GET("category")
+    Call<List<Categories>>getCategories();
+
+    @Multipart
+    @POST("category")
+    Call<JSONObject> postCategories(@Part("name") RequestBody name,
+                              @Part("total_product") RequestBody total_product);
 
 }

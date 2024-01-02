@@ -9,7 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,9 +26,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meow.Model.Categories;
+import com.example.meow.Model.Profile;
 import com.example.meow.R;
+import com.example.meow.Repositories.CategoriesRepository;
 import com.example.meow.View.Helper.ShoppingCartHelper;
+import com.example.meow.View.LoginView.LoginViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +42,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class CategoriesFragment extends Fragment {
+
+    private CategoriesViewModel categoriesViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,11 +110,23 @@ public class CategoriesFragment extends Fragment {
         floatingActionButton_categories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoriesViewModel.createPopUpAddCategory(getContext(), getView());
+                CategoriesViewModel.createPopUpAddCategory(getContext(), getView(), getActivity());
             }
         });
 
-        //Function Membuat Table
-        CategoriesViewModel.createTableCategories(getContext(), getView());
+        Log.d("CategoryFragment", "Category Fragment");
+        categoriesViewModel = new ViewModelProvider(getActivity()).get(CategoriesViewModel.class);
+        categoriesViewModel.init();
+        categoriesViewModel.getCategoriesViewModel();
+        categoriesViewModel.getResultCategories().observe(getViewLifecycleOwner(), new Observer<List<Categories>>() {
+            @Override
+            public void onChanged(List<Categories> listCategories) {
+                //Function Membuat Table
+                CategoriesViewModel.createTableCategories(getContext(), getView(), getActivity(), listCategories);
+            }
+        });
+//        List<Categories> listCategories = categoriesViewModel.getResultCategories().getValue();
+
+
     }
 }

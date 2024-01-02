@@ -3,6 +3,7 @@ package com.example.meow.Retrofit;
 import android.util.Log;
 
 import com.example.meow.Helper.Const;
+import com.example.meow.Model.Categories;
 import com.example.meow.Model.Profile;
 
 import org.json.JSONObject;
@@ -51,5 +52,13 @@ public class RetrofitService {
         RequestBody rolesPart = RequestBody.create(MediaType.parse("text/plain"), roles);
 
         return apiEndPoints.register(namePart, passwordPart, photoPathPart, addressPart, phonePart, rolesPart);
+    }
+    public Call<List<Categories>> getCategoriesRetrofitService(){return apiEndPoints.getCategories();}
+
+    public Call<JSONObject> createCategories(String name, String total_product){
+        RequestBody namePart = RequestBody.create(MediaType.parse("text/plain"), name);
+        RequestBody total_product_part = RequestBody.create(MediaType.parse("text/plain"), total_product);
+
+        return apiEndPoints.postCategories(namePart, total_product_part);
     }
 }

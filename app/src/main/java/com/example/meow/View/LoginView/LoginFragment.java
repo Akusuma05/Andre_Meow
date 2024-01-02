@@ -127,22 +127,25 @@ public class LoginFragment extends Fragment {
         });
 
         btn_login.setOnClickListener(view1 -> {
-            if(!username_login.getEditText().getText().toString().trim().isEmpty() &&
-                    !pass_login.getEditText().getText().toString().trim().isEmpty()){
-                String username = username_login.getEditText().getText().toString().trim();
-                String pass = pass_login.getEditText().getText().toString().trim();
-                List<Profile> profiles = loginViewModel.getResultProfile().getValue();
-                for (Profile profile : profiles){
-                    if(profile.getName().equals(username) && profile.getPassword().equals(pass)){
-                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
-                        startActivity(intent);
-                        return;
-                    }
-                }
-                Toast.makeText(getActivity(), "Wrong Username or Password",
-                        Toast.LENGTH_LONG).show();
-            }
+//            if(!username_login.getEditText().getText().toString().trim().isEmpty() &&
+//                    !pass_login.getEditText().getText().toString().trim().isEmpty()){
+//                String username = username_login.getEditText().getText().toString().trim();
+//                String pass = pass_login.getEditText().getText().toString().trim();
+//                List<Profile> profiles = loginViewModel.getResultProfile().getValue();
+//                for (Profile profile : profiles){
+//                    if(profile.getName().equals(username) && profile.getPassword().equals(pass)){
+//                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+//                        intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+//                        startActivity(intent);
+//                        return;
+//                    }
+//                }
+//                Toast.makeText(getActivity(), "Wrong Username or Password",
+//                        Toast.LENGTH_LONG).show();
+//            }
+            Intent intent = new Intent(getActivity(), DashboardActivity.class);
+            intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
         });
 
 
