@@ -110,7 +110,7 @@ public class CategoriesFragment extends Fragment {
         floatingActionButton_categories.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CategoriesViewModel.createPopUpAddCategory(getContext(), getView(), getActivity());
+                CategoriesViewModel.createPopUpAddCategory(getContext(), getView(), getActivity(), "add", 0);
             }
         });
 

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -61,6 +62,7 @@ public class CategoriesRepository {
     }
 
     public LiveData<String> createCategories(String name, String total_product) {
+        Log.d(TAG, "createCategoriesRepository");
         MutableLiveData<String> message = new MutableLiveData<>();
         apiService.createCategories(name, total_product).enqueue(new Callback() {
             @Override
@@ -85,6 +87,79 @@ public class CategoriesRepository {
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage(), t);
+            }
+        });
+        return message;
+    }
+
+    public LiveData<String> updateCategories(String name, String total_product, int id) {
+        Log.d(TAG, "updateCategoriesViewModel");
+        MutableLiveData<String> message = new MutableLiveData<>();
+        apiService.updateCategories(name, total_product, id).enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                if(response.isSuccessful()){
+                    if (response.body() != null){
+                        try {
+                            String rawJson = new Gson().toJson(response.body());
+                            Log.d(TAG, "Raw JSON response: " + rawJson);
+                            JSONObject object = new JSONObject(rawJson);
+                            String msg = object.getString("message");
+                            Log.d(TAG, "onResponse: "+msg);
+                            message.postValue(msg);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }else{
+                        Log.d(TAG, "onResponse: " + response.raw());
+                    }
+                } else {
+                    // Add this line to check for server errors
+                    try {
+                        Log.d(TAG, "Server returned an error: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JSONObject> call, Throwable t) {
+                // This will print the stack trace for the error
+                t.printStackTrace();
+            }
+        });
+
+        return message;
+    }
+
+    public LiveData<String> deleteCategories() {
+        MutableLiveData<String> message = new MutableLiveData<>();
+
+        apiService.deleteCategories().enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+                if(response.isSuccessful()){
+                    if (response.body() != null){
+                        try {
+                            String rawJson = new Gson().toJson(response.body());
+                            Log.d(TAG, "Raw JSON response: " + rawJson);
+                            JSONObject object = new JSONObject(rawJson);
+                            String msg = object.getString("message");
+                            Log.d(TAG, "onResponse: "+msg);
+                            message.postValue(msg);
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }else{
+                        Log.d(TAG, "onResponse: " + response.raw());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JSONObject> call, Throwable t) {
                 Log.e(TAG, "onFailure: " + t.getMessage(), t);
             }
         });

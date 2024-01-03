@@ -57,8 +57,13 @@ public class CategoriesViewModel extends ViewModel {
     }
 
     public LiveData<String> createCategoriesViewModel(String name, String total_product){
-        Log.d(TAG, "Register");
+        Log.d(TAG, "Create Categories");
         return categoriesRepository.createCategories(name, total_product);
+    }
+
+    public LiveData<String> updateCategoriesViewModel(String name, String total_product, int id){
+        Log.d(TAG, "Update Categories");
+        return categoriesRepository.updateCategories(name, total_product, id);
     }
 
     /**
@@ -70,7 +75,7 @@ public class CategoriesViewModel extends ViewModel {
      *
      * Usage: Fragment Categories
      * */
-    public static void createPopUpAddCategory(Context context, View layout, Activity activity) {
+    public static void createPopUpAddCategory(Context context, View layout, Activity activity, String status, int id) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.popup_add_categories, null);
 
@@ -101,10 +106,19 @@ public class CategoriesViewModel extends ViewModel {
         done_add_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!category_add_category.getEditText().getText().toString().trim().isEmpty()){
-                    String name = category_add_category.getEditText().getText().toString().trim();
-                    categoriesViewModel.createCategoriesViewModel(name, "0");
-                    popupWindow.dismiss();
+                if(status == "add"){
+                    if(!category_add_category.getEditText().getText().toString().trim().isEmpty()){
+                        String name = category_add_category.getEditText().getText().toString().trim();
+                        categoriesViewModel.createCategoriesViewModel(name, "0");
+                        popupWindow.dismiss();
+                    }
+                }else{
+                    if(!category_add_category.getEditText().getText().toString().trim().isEmpty()){
+                        String name = category_add_category.getEditText().getText().toString().trim();
+                        Log.d(TAG, String.valueOf(id));
+                        categoriesViewModel.updateCategoriesViewModel(name, "1", id);
+                        popupWindow.dismiss();
+                    }
                 }
             }
         });
@@ -171,11 +185,12 @@ public class CategoriesViewModel extends ViewModel {
             ImageView icon1 = new ImageView(context);
             icon1.setImageResource(R.drawable.edit);
             icon1.setPadding(16, 16, 16, 16);
+            int finalI = i;
             icon1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                    createPopUpAddCategory(context, view, activity);
+                    createPopUpAddCategory(context, view, activity, "edit", listCategories.get(finalI).getId());
                 }
             });
             iconColumn.addView(icon1);

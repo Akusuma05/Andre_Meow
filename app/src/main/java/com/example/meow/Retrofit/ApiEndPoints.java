@@ -2,6 +2,7 @@ package com.example.meow.Retrofit;
 
 import com.example.meow.Model.Categories;
 import com.example.meow.Model.Profile;
+import com.example.meow.Model.UpdateCategories;
 
 import org.json.JSONObject;
 
@@ -9,12 +10,14 @@ import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface ApiEndPoints {
     @Multipart
@@ -36,5 +39,13 @@ public interface ApiEndPoints {
     @POST("category")
     Call<JSONObject> postCategories(@Part("name") RequestBody name,
                               @Part("total_product") RequestBody total_product);
+
+    @PUT("category/{id}")
+    Call<JSONObject> putCategories(
+            @Path("id") int id,
+            @Body UpdateCategories category);
+
+    @DELETE("category/{course}")
+    Call<JSONObject> deleteCategories();
 
 }
