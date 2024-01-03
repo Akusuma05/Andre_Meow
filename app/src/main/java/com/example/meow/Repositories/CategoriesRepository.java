@@ -134,10 +134,10 @@ public class CategoriesRepository {
         return message;
     }
 
-    public LiveData<String> deleteCategories() {
+    public LiveData<String> deleteCategories(int id) {
         MutableLiveData<String> message = new MutableLiveData<>();
 
-        apiService.deleteCategories().enqueue(new Callback<JSONObject>() {
+        apiService.deleteCategories(id).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
                 if(response.isSuccessful()){
@@ -155,12 +155,20 @@ public class CategoriesRepository {
                     }else{
                         Log.d(TAG, "onResponse: " + response.raw());
                     }
+                } else {
+                    // Add this line to check for server errors
+                    try {
+                        Log.d(TAG, "Server returned an error: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<JSONObject> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage(), t);
+                // This will print the stack trace for the error
+                t.printStackTrace();
             }
         });
         return message;

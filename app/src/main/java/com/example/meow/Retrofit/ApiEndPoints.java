@@ -45,7 +45,7 @@ public interface ApiEndPoints {
             @Path("id") int id,
             @Body UpdateCategories category);
 
-    @DELETE("category/{course}")
-    Call<JSONObject> deleteCategories();
+    @DELETE("category/{id}")
+    Call<JSONObject> deleteCategories(@Path("id") int id);
 
 }

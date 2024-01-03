@@ -80,7 +80,7 @@ public class RetrofitService {
         return apiEndPoints.putCategories(id, categories);
     }
 
-    public Call<JSONObject> deleteCategories(){
-        return apiEndPoints.deleteCategories();
+    public Call<JSONObject> deleteCategories(int id){
+        return apiEndPoints.deleteCategories(id);
     }
 }

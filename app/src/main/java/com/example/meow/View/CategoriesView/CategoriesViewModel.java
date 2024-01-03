@@ -66,6 +66,11 @@ public class CategoriesViewModel extends ViewModel {
         return categoriesRepository.updateCategories(name, total_product, id);
     }
 
+    public LiveData<String> deleteCategoriesViewModel(int id){
+        Log.d(TAG, "Update Categories");
+        return categoriesRepository.deleteCategories(id);
+    }
+
     /**
      * Function Buat Keluarin Pop Up Add Category
      *
@@ -202,6 +207,9 @@ public class CategoriesViewModel extends ViewModel {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Icon 2 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                    CategoriesViewModel categoriesViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(CategoriesViewModel.class);
+                    categoriesViewModel.init();
+                    categoriesViewModel.deleteCategoriesViewModel(listCategories.get(finalI).getId());
                 }
             });
             iconColumn.addView(icon2);
