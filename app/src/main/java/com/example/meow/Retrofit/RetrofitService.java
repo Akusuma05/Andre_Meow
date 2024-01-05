@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.example.meow.Helper.Const;
 import com.example.meow.Model.Categories;
+import com.example.meow.Model.Product;
 import com.example.meow.Model.Profile;
 import com.example.meow.Model.UpdateCategories;
+import com.example.meow.Model.UpdateProduct;
 
 import org.json.JSONObject;
 
@@ -16,6 +18,7 @@ import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Part;
 
 public class RetrofitService {
     private static RetrofitService service;
@@ -82,5 +85,38 @@ public class RetrofitService {
 
     public Call<JSONObject> deleteCategories(int id){
         return apiEndPoints.deleteCategories(id);
+    }
+
+    public Call<List<Product>> getProducts(){return apiEndPoints.getProducts();}
+
+    public Call<JSONObject> createProduct(String name, String total_product, String type,String price,String stock){
+        Log.d(TAG, "createProduct View Model");
+        RequestBody name_p = RequestBody.create(MediaType.parse("text/plain"), name);
+        RequestBody total_product_p = RequestBody.create(MediaType.parse("text/plain"), total_product);
+        RequestBody price_p = RequestBody.create(MediaType.parse("text/plain"), price);
+        RequestBody stock_p = RequestBody.create(MediaType.parse("text/plain"), stock);
+        RequestBody type_p = RequestBody.create(MediaType.parse("text/plain"), type);
+
+        return apiEndPoints.createProducts(name_p, total_product_p, price_p, stock_p, type_p);
+    }
+
+    public Call<JSONObject> updateProducts(String name, String total_product, String type,String price,String stock, int id){
+        Log.d(TAG, "updateProduct View Model");
+        UpdateProduct products = new UpdateProduct();
+        products.setName(name);
+        products.setImage_path(total_product);
+        products.setType(type);
+        products.setPrice(price);
+        products.setStock(stock);
+        Log.d(TAG, products.getName());
+        Log.d(TAG, products.getImage_path());
+        Log.d(TAG, products.getPrice());
+        Log.d(TAG, products.getType());
+        Log.d(TAG, products.getStock());
+        return apiEndPoints.putProducts(id, products);
+    }
+
+    public Call<JSONObject> deleteProducts(int id){
+        return apiEndPoints.deleteProducts(id);
     }
 }

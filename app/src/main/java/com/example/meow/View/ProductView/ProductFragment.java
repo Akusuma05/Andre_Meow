@@ -8,7 +8,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,9 +26,15 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.meow.Model.Categories;
+import com.example.meow.Model.Product;
 import com.example.meow.R;
+import com.example.meow.Repositories.ProductRepository;
+import com.example.meow.View.CategoriesView.CategoriesViewModel;
 import com.example.meow.View.Helper.ShoppingCartHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +42,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class ProductFragment extends Fragment {
+
+    private ProductViewModel productViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,12 +96,24 @@ public class ProductFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.d("ProductFragment", "Product Fragment");
+        productViewModel = new ViewModelProvider(getActivity()).get(ProductViewModel.class);
+        productViewModel.init();
+        productViewModel.getProductViewModel();
+        productViewModel.getResultProduct().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> listProduct) {
+                //Function Membuat Table
+                productViewModel.createTableProduct(getView(), getContext(), getActivity(), listProduct);
+            }
+        });
+
         //Button Add Product
         FloatingActionButton floatingActionButton_product = view.findViewById(R.id.floatingActionButton_product);
         floatingActionButton_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductViewModel.createPopUpAddProduct(getContext(), getView());
+                ProductViewModel.createPopUpAddProduct(getContext(), getView(), getActivity());
             }
         });
 
@@ -103,6 +126,6 @@ public class ProductFragment extends Fragment {
             }
         });
 
-        ProductViewModel.createTableProduct(getView(), getContext());
+//        ProductViewModel.createTableProduct(getView(), getContext());
     }
 }

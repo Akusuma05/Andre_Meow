@@ -1,13 +1,16 @@
 package com.example.meow.View.ProductView;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -16,9 +19,56 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.meow.R;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 
-public class ProductViewModel {
+import com.example.meow.Model.Categories;
+import com.example.meow.Model.Product;
+import com.example.meow.R;
+import com.example.meow.Repositories.CategoriesRepository;
+import com.example.meow.Repositories.ProductRepository;
+import com.example.meow.View.CategoriesView.CategoriesViewModel;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.List;
+
+public class ProductViewModel extends ViewModel {
+    private static final String TAG = "ProductViewModel";
+    private ProductRepository productRepository;
+    private LiveData<List<Product>> resultProduct;
+
+    public void init(){
+        productRepository = ProductRepository.getInstance();
+        resultProduct = new MutableLiveData<>();
+    }
+
+    public void getProductViewModel() {
+        Log.d(TAG, "GetProductsViewModel");
+        resultProduct = productRepository.getProducts();
+    }
+
+    public LiveData<List<Product>> getResultProduct() {
+        return resultProduct;
+    }
+
+    public LiveData<String> createProductViewModel(String name, String total_product, String type, String price, String stock) {
+        Log.d(TAG, "createProductsViewModel");
+        return productRepository.createProduct(name, total_product, type, price, stock);
+    }
+
+    public LiveData<String> updateProductViewModel(String name, String total_product, String type, String price, String stock, int id) {
+        Log.d(TAG, "UpdateProductsViewModel");
+        return productRepository.updateProduct(name, total_product, type, price, stock, id);
+    }
+
+    public LiveData<String> deleteProductViewModel(int id){
+        Log.d(TAG, "DeleteProductsViewModel");
+        return productRepository.deleteCategories(id);
+    }
+
     /**
      * Function Buat Keluarin Table Product di Product
      *
@@ -28,7 +78,7 @@ public class ProductViewModel {
      *
      * Usage: Fragment Product
      * */
-    public static void createTableProduct(View view, Context context) {
+    public static void createTableProduct(View view, Context context, Activity activity, List<Product> listProduct) {
         TableLayout table = view.findViewById(R.id.table3);
         // Create a new table row for the column titles
         TableRow titleRow = new TableRow(context);
@@ -79,7 +129,7 @@ public class ProductViewModel {
         line.setBackgroundColor(Color.DKGRAY);
         table.addView(line);
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < listProduct.size(); i++) {
             // Create a new table row for the column titles
             TableRow tableRowProduct = new TableRow(context);
             tableRowProduct.setPadding(32, 32, 32, 32); // Add padding to the row
@@ -91,7 +141,7 @@ public class ProductViewModel {
 
             // Create the columns
             TextView name1 = new TextView(context);
-            name1.setText("Name" + i);
+            name1.setText(listProduct.get(i).getName());
             tableRowProduct.addView(name1);
 
             // Create the columns
@@ -106,12 +156,12 @@ public class ProductViewModel {
 
             // Create the columns
             TextView stock1 = new TextView(context);
-            stock1.setText(String.valueOf(i));
+            stock1.setText(String.valueOf(listProduct.get(i).getStock()));
             tableRowProduct.addView(stock1);
 
             // Create the columns
             TextView price1 = new TextView(context);
-            price1.setText("Price" + i);
+            price1.setText(String.valueOf(listProduct.get(i).getPrice()));
             tableRowProduct.addView(price1);
 
             LinearLayout iconColumn = new LinearLayout(context);
@@ -120,11 +170,12 @@ public class ProductViewModel {
             ImageView icon1 = new ImageView(context);
             icon1.setImageResource(R.drawable.edit);
             icon1.setPadding(16, 16, 16, 16);
+            int finalI = i;
             icon1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Icon 1 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
-                    createPopUpEditProduct(context, view);
+                    createPopUpEditProduct(context, view, activity, listProduct.get(finalI).getId());
                 }
             });
             iconColumn.addView(icon1);
@@ -136,6 +187,9 @@ public class ProductViewModel {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context, "Icon 2 in " + categories.getText() + " clicked", Toast.LENGTH_SHORT).show();
+                    ProductViewModel productViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ProductViewModel.class);
+                    productViewModel.init();
+                    productViewModel.deleteProductViewModel(listProduct.get(finalI).getId());
                 }
             });
             iconColumn.addView(icon2);
@@ -162,9 +216,17 @@ public class ProductViewModel {
      *
      * Usage: floatingActionButton_product (Fragment Product)
      * */
-    public static void createPopUpAddProduct(Context context, View layout) {
+    public static void createPopUpAddProduct(Context context, View layout, Activity activity) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.popup_add_product, null);
+
+        ProductViewModel productViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ProductViewModel.class);
+        productViewModel.init();
+
+        TextInputLayout name_add_product = popUpView.findViewById(R.id.name_add_product);
+        TextInputLayout price_add_product = popUpView.findViewById(R.id.price_add_product);
+
+        Button done_add_product = popUpView.findViewById(R.id.done_add_product);
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -181,6 +243,18 @@ public class ProductViewModel {
             public boolean onTouch(View v, MotionEvent event) {
                 popupWindow.dismiss();
                 return false;
+            }
+        });
+        done_add_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = name_add_product.getEditText().getText().toString().trim();
+                String price = price_add_product.getEditText().getText().toString().trim();
+                String total_product = "10";
+                String type = "3";
+                String stock = "10";
+                productViewModel.createProductViewModel(name,  total_product, type, price, stock);
+                popupWindow.dismiss();
             }
         });
     }
@@ -194,9 +268,17 @@ public class ProductViewModel {
      *
      * Usage: icon1 (ProductViewModel)
      * */
-    private static void createPopUpEditProduct(Context context, View layout) {
+    private static void createPopUpEditProduct(Context context, View layout, Activity activity, int id) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View popUpView = inflater.inflate(R.layout.popup_edit_product, null);
+
+        ProductViewModel productViewModel = new ViewModelProvider((ViewModelStoreOwner) activity).get(ProductViewModel.class);
+        productViewModel.init();
+
+        TextInputLayout name_edit_product = popUpView.findViewById(R.id.name_edit_product);
+        TextInputLayout price_edit_product = popUpView.findViewById(R.id.price_edit_product);
+
+        Button done_edit_product = popUpView.findViewById(R.id.done_edit_product);
 
         int width = ViewGroup.LayoutParams.MATCH_PARENT;
         int height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -215,5 +297,18 @@ public class ProductViewModel {
                 return false;
             }
         });
+        done_edit_product.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = name_edit_product.getEditText().getText().toString().trim();
+                String price = price_edit_product.getEditText().getText().toString().trim();
+                String total_product = "10";
+                String type = "3";
+                String stock = "10";
+                productViewModel.updateProductViewModel(name, total_product, type, price, stock, id);
+                popupWindow.dismiss();
+            }
+        });
+
     }
 }

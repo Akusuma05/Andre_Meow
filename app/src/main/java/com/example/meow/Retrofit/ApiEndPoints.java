@@ -1,8 +1,10 @@
 package com.example.meow.Retrofit;
 
 import com.example.meow.Model.Categories;
+import com.example.meow.Model.Product;
 import com.example.meow.Model.Profile;
 import com.example.meow.Model.UpdateCategories;
+import com.example.meow.Model.UpdateProduct;
 
 import org.json.JSONObject;
 
@@ -47,5 +49,24 @@ public interface ApiEndPoints {
 
     @DELETE("category/{id}")
     Call<JSONObject> deleteCategories(@Path("id") int id);
+
+    @GET("product")
+    Call<List<Product>> getProducts();
+
+    @Multipart
+    @POST("product")
+    Call<JSONObject> createProducts(@Part("name") RequestBody name,
+                              @Part("image_path") RequestBody image_path,
+                              @Part("price") RequestBody price,
+                              @Part("stock") RequestBody stock,
+                              @Part("type") RequestBody type);
+
+    @PUT("product/{id}")
+    Call<JSONObject> putProducts(
+            @Path("id") int id,
+            @Body UpdateProduct product);
+
+    @DELETE("product/{id}")
+    Call<JSONObject> deleteProducts(@Path("id") int id);
 
 }
