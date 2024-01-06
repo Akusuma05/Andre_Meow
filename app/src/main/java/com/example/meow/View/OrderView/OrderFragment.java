@@ -9,10 +9,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,11 +26,14 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.meow.Model.Product;
 import com.example.meow.Model.RecyclerView_Items;
 import com.example.meow.R;
 import com.example.meow.View.Helper.ShoppingCartHelper;
+import com.example.meow.View.ProductView.ProductViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +41,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class OrderFragment extends Fragment {
+
+    private OrderViewModel orderViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -87,9 +95,18 @@ public class OrderFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //RecylerView
-        ArrayList<RecyclerView_Items> recyclerViewItems = new ArrayList<RecyclerView_Items>();
-        OrderViewModel.RecyclerViewOrder(getView(), getContext(), recyclerViewItems);
+        Log.d("ProductFragment", "Product Fragment");
+        orderViewModel = new ViewModelProvider(getActivity()).get(OrderViewModel.class);
+        orderViewModel.init();
+        orderViewModel.getOrderViewModel();
+        orderViewModel.getResultProductOrder().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> listProduct) {
+                //RecylerView
+                ArrayList<RecyclerView_Items> recyclerViewItems = new ArrayList<RecyclerView_Items>();
+                OrderViewModel.RecyclerViewOrder(getView(), getContext(), recyclerViewItems, listProduct);
+            }
+        });
 
         //Tombol Shopping Cart
         ImageView shopping_cart_order = view.findViewById(R.id.shopping_cart_order);

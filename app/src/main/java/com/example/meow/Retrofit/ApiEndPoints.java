@@ -1,6 +1,8 @@
 package com.example.meow.Retrofit;
 
 import com.example.meow.Model.Categories;
+import com.example.meow.Model.Order;
+import com.example.meow.Model.OrderItem;
 import com.example.meow.Model.Product;
 import com.example.meow.Model.Profile;
 import com.example.meow.Model.UpdateCategories;
@@ -22,6 +24,9 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiEndPoints {
+    /**
+     * User
+     * */
     @Multipart
     @POST("user")
     Call<JSONObject> register(@Part("name") RequestBody name,
@@ -34,6 +39,9 @@ public interface ApiEndPoints {
     @GET("user")
     Call<List<Profile>>getUser();
 
+    /**
+     * Category
+     * */
     @GET("category")
     Call<List<Categories>>getCategories();
 
@@ -50,6 +58,9 @@ public interface ApiEndPoints {
     @DELETE("category/{id}")
     Call<JSONObject> deleteCategories(@Path("id") int id);
 
+    /**
+     * Product
+     * */
     @GET("product")
     Call<List<Product>> getProducts();
 
@@ -69,4 +80,16 @@ public interface ApiEndPoints {
     @DELETE("product/{id}")
     Call<JSONObject> deleteProducts(@Path("id") int id);
 
+    /**
+     * Order
+     * */
+    @GET("order")
+    Call<List<Order>> getOrder();
+
+
+    /**
+     * Order Item
+     * */
+    @GET("order_item")
+    Call<List<OrderItem>> getOrderItem();
 }

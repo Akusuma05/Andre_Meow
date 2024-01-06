@@ -8,6 +8,8 @@ import android.graphics.Color;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,13 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.meow.Model.Order;
+import com.example.meow.Model.OrderItem;
+import com.example.meow.Model.Product;
+import com.example.meow.Model.RecyclerView_Items;
 import com.example.meow.R;
 import com.example.meow.View.Helper.ShoppingCartHelper;
+import com.example.meow.View.OrderView.OrderViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -41,6 +48,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class DashboardFragment extends Fragment {
+
+    private DashboardViewModel dashboardViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -104,6 +113,29 @@ public class DashboardFragment extends Fragment {
 
         DashboardViewModel.createLineGraphDashboard(getView());
         DashboardViewModel.createPieChartDashboard(getView());
-        DashboardViewModel.createTableDashboard(getView(), getContext());
+
+        dashboardViewModel = new ViewModelProvider(getActivity()).get(DashboardViewModel.class);
+        dashboardViewModel.init();
+        dashboardViewModel.getOrderViewModel();
+        dashboardViewModel.getOrderItemViewModel();
+        dashboardViewModel.getProductOrderViewModel();
+        dashboardViewModel.getResultOrderDashboard().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
+            @Override
+            public void onChanged(List<Order> listOrder) {
+                dashboardViewModel.getResultOrderItemDashboard().observe(getViewLifecycleOwner(), new Observer<List<OrderItem>>() {
+                    @Override
+                    public void onChanged(List<OrderItem> listOrderItem) {
+                        dashboardViewModel.getResultProductOrderDashboard().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
+                            @Override
+                            public void onChanged(List<Product> listProduct) {
+                                DashboardViewModel.createTableDashboard(getView(), getContext(), listOrder, listOrderItem, listProduct);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+
     }
 }

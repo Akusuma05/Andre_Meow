@@ -3,12 +3,24 @@ package com.example.meow.View.DashboardView;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+
+import com.example.meow.Model.Categories;
+import com.example.meow.Model.Order;
+import com.example.meow.Model.OrderItem;
+import com.example.meow.Model.Product;
 import com.example.meow.R;
+import com.example.meow.Repositories.OrderItemRepository;
+import com.example.meow.Repositories.OrderRepository;
+import com.example.meow.Repositories.ProductRepository;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Description;
@@ -25,7 +37,51 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DashboardViewModel {
+public class DashboardViewModel extends ViewModel {
+
+    private static final String TAG = "DashboardViewModel";
+    private OrderRepository orderRepository;
+    private OrderItemRepository orderItemRepository;
+    private ProductRepository productRepository;
+    private LiveData<List<Order>> resultOrder;
+    private LiveData<List<OrderItem>> resultOrderItem;
+    private LiveData<List<Product>> resultProduct;
+
+    public void init(){
+        orderRepository = OrderRepository.getInstance();
+        orderItemRepository = OrderItemRepository.getInstance();
+        productRepository = ProductRepository.getInstance();
+        resultOrder = new MutableLiveData<>();
+        resultOrderItem = new MutableLiveData<>();
+        resultProduct = new MutableLiveData<>();
+    }
+
+    public void getOrderViewModel() {
+        Log.d(TAG, "GetOrderViewModel");
+        resultOrder = orderRepository.getOrder();
+    }
+
+    public LiveData<List<Order>> getResultOrderDashboard() {
+        return resultOrder;
+    }
+
+    public void getOrderItemViewModel() {
+        Log.d(TAG, "GetOrderItemViewModel");
+        resultOrderItem = orderItemRepository.getOrderItem();
+    }
+
+    public LiveData<List<OrderItem>> getResultOrderItemDashboard() {
+        return resultOrderItem;
+    }
+
+    public void getProductOrderViewModel() {
+        Log.d(TAG, "GetProductOrderViewModel");
+        resultProduct = productRepository.getProducts();
+    }
+
+    public LiveData<List<Product>> getResultProductOrderDashboard() {
+        return resultProduct;
+    }
 
     /**
      * Function Buat Keluarin LineGraph
@@ -167,7 +223,7 @@ public class DashboardViewModel {
      *
      * Usage: Fragment Dashboard
      * */
-    public static void createTableDashboard(View view, Context context){
+    public static void createTableDashboard(View view, Context context, List<Order> listOrder, List<OrderItem> listOrderItem, List<Product> listProduct){
         TableLayout table = view.findViewById(R.id.table);
 
         // Create a new table row for the column titles
@@ -225,42 +281,55 @@ public class DashboardViewModel {
         table.addView(line);
 
         // Add dummy data
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 0; i < listOrder.size(); i++) {
             // Create a new table row
             TableRow row = new TableRow(context);
             row.setPadding(32, 32, 32, 32); // Add padding to the row
 
             // Create the columns
             TextView no1 = new TextView(context);
-            no1.setText(String.valueOf(i));
+            no1.setText(String.valueOf(i+1));
             row.addView(no1);
 
             TextView date1 = new TextView(context);
-            date1.setText("23/12/2023");
+            date1.setText("blom");
             row.addView(date1);
 
             TextView time1 = new TextView(context);
-            time1.setText("10:30 AM");
+            time1.setText("blom");
             row.addView(time1);
 
-            TextView categories1 = new TextView(context);
-            categories1.setText("Category " + i);
-            row.addView(categories1);
+            for(int x = 0; x < listOrderItem.size(); x++){
+                if(listOrderItem.get(x).getOrder_id() == listOrder.get(i).getId()){
+                    for(int y = 0; y < listProduct.size(); y++){
+                        if(listProduct.get(y).getId() == listOrderItem.get(x).getProduct_id()){
+                            TextView categories1 = new TextView(context);
+                            categories1.setText(String.valueOf(listProduct.get(y).getType()));
+                            row.addView(categories1);
+                        }
+                    }
+                }
+            }
 
-            TextView products1 = new TextView(context);
-            products1.setText("Product " + i);
-            row.addView(products1);
+            for(int x = 0; x < listOrderItem.size(); x++){
+                if(listOrderItem.get(x).getOrder_id() == listOrder.get(i).getId()){
+                    TextView products1 = new TextView(context);
+                    products1.setText(String.valueOf(listOrderItem.get(x).getProduct_id()));
+                    row.addView(products1);
+
+                }
+            }
 
             TextView employee1 = new TextView(context);
-            employee1.setText("Employee " + i);
+            employee1.setText(String.valueOf(listOrder.get(i).getUser_id()));
             row.addView(employee1);
 
             TextView paymentMethod1 = new TextView(context);
-            paymentMethod1.setText("Payment Method " + i);
+            paymentMethod1.setText(listOrder.get(i).getPayment_method());
             row.addView(paymentMethod1);
 
             TextView amount1 = new TextView(context);
-            amount1.setText(String.valueOf(1500 + i));
+            amount1.setText("blom");
             row.addView(amount1);
 
             // Add the row to the table

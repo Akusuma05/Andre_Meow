@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.example.meow.Helper.Const;
 import com.example.meow.Model.Categories;
+import com.example.meow.Model.Order;
+import com.example.meow.Model.OrderItem;
 import com.example.meow.Model.Product;
 import com.example.meow.Model.Profile;
 import com.example.meow.Model.UpdateCategories;
@@ -87,6 +89,9 @@ public class RetrofitService {
         return apiEndPoints.deleteCategories(id);
     }
 
+    /**
+     * Product
+     * */
     public Call<List<Product>> getProducts(){return apiEndPoints.getProducts();}
 
     public Call<JSONObject> createProduct(String name, String total_product, String type,String price,String stock){
@@ -119,4 +124,14 @@ public class RetrofitService {
     public Call<JSONObject> deleteProducts(int id){
         return apiEndPoints.deleteProducts(id);
     }
+
+    /**
+     * Order
+     * */
+    public Call<List<Order>> getOrders(){return apiEndPoints.getOrder();}
+
+    /**
+     * Order Item
+     * */
+    public Call<List<OrderItem>> getOrderItems(){return apiEndPoints.getOrderItem();}
 }
